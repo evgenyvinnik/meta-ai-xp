@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { WindowDropDowns } from 'components';
+import WindowDropDowns from '../../../components/WindowDropDowns/WindowDropDowns';
 import dropDownData from './dropDownData';
 import dead from 'assets/minesweeper/dead.png';
 import smile from 'assets/minesweeper/smile.png';

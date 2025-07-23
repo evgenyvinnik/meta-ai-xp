@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { WindowDropDowns } from 'components';
+import WindowDropDowns from '../../../components/WindowDropDowns/WindowDropDowns';
 import dropDownData from './dropDownData';
 import go from 'assets/windowsIcons/290.png';
 import search from 'assets/windowsIcons/299(32x32).png';
