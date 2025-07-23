@@ -2,7 +2,7 @@ import React, { useRef, memo } from 'react';
 import useWindowSize from 'react-use/lib/useWindowSize';
 import styled from 'styled-components';
 
-import { useElementResize } from 'hooks';
+import useElementResize from '../../hooks/useElementResize';
 import HeaderButtons from './HeaderButtons';
 
 function Windows({

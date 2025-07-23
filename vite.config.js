@@ -5,14 +5,9 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react({
-    include: "**/*.{jsx,js}",
+    include: "**/*.{jsx,js,tsx,ts}",
     jsxRuntime: 'automatic',
   })],
-  esbuild: {
-    loader: "jsx",
-    include: /src.*\.[jt]sx?$/,
-    exclude: [],
-  },
   resolve: {
     alias: {
       // Map all the common absolute import paths used in the project

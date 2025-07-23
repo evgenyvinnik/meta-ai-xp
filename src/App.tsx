@@ -2,7 +2,7 @@ import React from 'react';
 
 import WinXP from './WinXP/WinXP';
 
-const App = () => {
+const App: React.FC = () => {
   return <WinXP />;
 };
 

@@ -22,7 +22,7 @@ import Modal from './Modal/Modal';
 import Footer from './Footer/Footer';
 import Windows from './Windows/Windows';
 import Icons from './Icons/Icons';
-import { DashedBox } from 'components';
+import DashedBox from '../components/DashedBox/DashedBox';
 
 const initState = {
   apps: defaultAppState,
