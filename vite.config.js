@@ -6,6 +6,7 @@ import path from 'path'
 export default defineConfig({
   plugins: [react({
     include: "**/*.{jsx,js}",
+    jsxRuntime: 'automatic',
   })],
   esbuild: {
     loader: "jsx",
