@@ -9336,29 +9336,6 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-webamp@^1.3.2-beta.2:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/webamp/-/webamp-1.5.0.tgz#f728992c7e28ca921c1155761f9cf96711f9bdfc"
-  integrity sha512-Rz2L90pUqg6Y/1jbtniS8RCuDD8TMwfjqv6D/4T93UfvGPGvfQR00LE/rfaHRfG6FgQfiOul7RyPXvCaEikCxg==
-  dependencies:
-    ani-cursor "^0.0.4"
-    butterchurn "^3.0.0-beta.3"
-    butterchurn-presets "3.0.0-beta.4"
-    classnames "^2.2.5"
-    fscreen "^1.0.2"
-    invariant "^2.2.3"
-    jszip "^3.1.3"
-    lodash "^4.17.21"
-    milkdrop-preset-converter-aws "^0.1.6"
-    music-metadata-browser "^0.6.1"
-    react "^17.0.1"
-    react-dom "^17.0.1"
-    react-redux "^7.2.2"
-    redux "^4.0.5"
-    reselect "^3.0.1"
-    tinyqueue "^1.2.3"
-    winamp-eqf "^1.0.0"
-
 webidl-conversions@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
