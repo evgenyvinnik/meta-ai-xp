@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import FooterMenu from './FooterMenu';
-import Balloon from 'components/Balloon';
+import { Balloon } from 'components';
 import startButton from 'assets/windowsIcons/start.png';
 import sound from 'assets/windowsIcons/690(16x16).png';
 import usb from 'assets/windowsIcons/394(16x16).png';

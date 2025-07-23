@@ -18,10 +18,10 @@ import {
 } from './constants/actions';
 import { FOCUSING, POWER_STATE } from './constants';
 import { defaultIconState, defaultAppState, appSettings } from './apps';
-import Modal from './Modal';
-import Footer from './Footer';
-import Windows from './Windows';
-import Icons from './Icons';
+import Modal from './Modal/Modal';
+import Footer from './Footer/Footer';
+import Windows from './Windows/Windows';
+import Icons from './Icons/Icons';
 import { DashedBox } from 'components';
 
 const initState = {
