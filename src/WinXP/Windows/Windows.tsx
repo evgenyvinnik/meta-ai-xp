@@ -41,13 +41,15 @@ interface WindowProps {
   injectProps?: any;
   id: string;
   onMouseDown: (id: string) => void;
-  onClose: (id: string) => void;
-  onMinimize: (id: string) => void;
-  onMaximize: (id: string) => void;
+  onMouseUpClose: (id: string) => void;
+  onMouseUpMinimize: (id: string) => void;
+  onMouseUpMaximize: (id: string) => void;
   component: React.ComponentType<any>;
   header: {
     icon: string;
     title: string;
+    buttons?: any;
+    invisible?: boolean;
   };
   defaultSize: {
     width: number;
@@ -88,7 +90,7 @@ function Windows({
   );
 }
 
-const Window = memo(function({
+const Window = memo(function Window({
   injectProps,
   id,
   onMouseDown,
@@ -104,20 +106,20 @@ const Window = memo(function({
   zIndex,
   isFocus,
   className,
-}) {
-  function _onMouseDown() {
+}: WindowProps) {
+  const _onMouseDown = () => {
     onMouseDown(id);
-  }
-  function _onMouseUpClose() {
+  };
+  const _onMouseUpClose = () => {
     onMouseUpClose(id);
-  }
-  function _onMouseUpMinimize() {
+  };
+  const _onMouseUpMinimize = () => {
     onMouseUpMinimize(id);
-  }
-  function _onMouseUpMaximize() {
+  };
+  const _onMouseUpMaximize = () => {
     if (resizable) onMouseUpMaximize(id);
-  }
-  function onDoubleClickHeader(e) {
+  };
+  const onDoubleClickHeader = (e: React.MouseEvent) => {
     if (e.target !== dragRef.current) return;
     _onMouseUpMaximize();
   }
