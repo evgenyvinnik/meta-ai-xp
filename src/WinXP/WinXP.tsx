@@ -46,7 +46,7 @@ interface WinXPState {
   nextZIndex: number;
   focusing: string;
   icons: any[];
-  selecting: boolean;
+  selecting: boolean | any; // Can be boolean or selection data
   powerState: string;
   selectBox?: any;
 }
@@ -190,12 +190,12 @@ const reducer = (state: WinXPState, action: WinXPAction = { type: '' }): WinXPSt
           ...icon,
           isFocus: false,
         })),
-        selecting: action.payload,
+        selecting: true,
       };
     case END_SELECT:
       return {
         ...state,
-        selecting: null,
+        selecting: false,
       };
     case POWER_OFF:
       return {
@@ -314,16 +314,16 @@ const WinXP: React.FC = () => {
     },
     [dispatch],
   );
-  function onClickModalButton(text) {
+  const onClickModalButton = (text: string) => {
     dispatch({ type: CANCEL_POWER_OFF });
     dispatch({
       type: ADD_APP,
       payload: appSettings.Error,
     });
-  }
-  function onModalClose() {
+  };
+  const onModalClose = () => {
     dispatch({ type: CANCEL_POWER_OFF });
-  }
+  };
   return (
     <Container
       ref={ref}
@@ -336,7 +336,6 @@ const WinXP: React.FC = () => {
         onMouseDown={onMouseDownIcon}
         onDoubleClick={onDoubleClickIcon}
         displayFocus={state.focusing === FOCUSING.ICON}
-        appSettings={appSettings}
         mouse={mouse}
         selecting={state.selecting}
         setSelectedIcons={onIconsSelected}
@@ -348,12 +347,12 @@ const WinXP: React.FC = () => {
         onClose={onCloseApp}
         onMinimize={onMinimizeWindow}
         onMaximize={onMaximizeWindow}
-        focusedAppId={focusedAppId}
+        focusedAppId={String(focusedAppId)}
       />
       <Footer
         apps={state.apps}
         onMouseDownApp={onMouseDownFooterApp}
-        focusedAppId={focusedAppId}
+        focusedAppId={String(focusedAppId)}
         onMouseDown={onMouseDownFooter}
         onClickMenuItem={onClickMenuItem}
       />
@@ -385,7 +384,11 @@ const animation = {
   [POWER_STATE.LOG_OFF]: powerOffAnimation,
 };
 
-const Container = styled.div`
+interface ContainerProps {
+  state: string;
+}
+
+const Container = styled.div<ContainerProps>`
   @import url('https://fonts.googleapis.com/css?family=Noto+Sans');
   font-family: Tahoma, 'Noto Sans', sans-serif;
   height: 100%;
