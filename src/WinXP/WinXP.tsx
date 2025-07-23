@@ -1,4 +1,4 @@
-import React, { useReducer, useRef, useCallback } from 'react';
+import React, { useReducer, useRef, useCallback, ComponentType } from 'react';
 import styled, { keyframes } from 'styled-components';
 import useMouse from 'react-use/lib/useMouse';
 
@@ -18,13 +18,51 @@ import {
 } from './constants/actions';
 import { FOCUSING, POWER_STATE } from './constants';
 import { defaultIconState, defaultAppState, appSettings } from './apps';
+
+// Basic type definitions for WinXP component
+// Using pragmatic typing that works with existing codebase
+
+// Basic callback types for better IntelliSense
+type AppCallback = (id: any) => void;
+type IconCallback = (id: any) => void;
+type ComponentCallback = (component: any) => void;
+type MenuItemCallback = (item: string) => void;
+
+// Basic interfaces for core data structures
+interface Size {
+  width: number;
+  height: number;
+}
+
+interface Offset {
+  x: number;
+  y: number;
+}
+
+// Flexible state interface that matches existing structure
+interface WinXPState {
+  apps: any[];
+  nextAppID: number;
+  nextZIndex: number;
+  focusing: string;
+  icons: any[];
+  selecting: boolean;
+  powerState: string;
+  selectBox?: any;
+}
+
+// Flexible action type that works with existing reducer
+type WinXPAction = {
+  type: string;
+  payload?: any;
+};
 import Modal from './Modal/Modal';
 import Footer from './Footer/Footer';
 import Windows from './Windows/Windows';
 import Icons from './Icons/Icons';
 import DashedBox from '../components/DashedBox/DashedBox';
 
-const initState = {
+const initState: WinXPState = {
   apps: defaultAppState,
   nextAppID: defaultAppState.length,
   nextZIndex: defaultAppState.length,
@@ -33,11 +71,11 @@ const initState = {
   selecting: false,
   powerState: POWER_STATE.START,
 };
-const reducer = (state, action = { type: '' }) => {
+const reducer = (state: WinXPState, action: WinXPAction = { type: '' }): WinXPState => {
   switch (action.type) {
     case ADD_APP:
       const app = state.apps.find(
-        _app => _app.component === action.payload.component,
+        (_app: any) => _app.component === action.payload.component,
       );
       if (action.payload.multiInstance || !app) {
         return {
@@ -173,65 +211,70 @@ const reducer = (state, action = { type: '' }) => {
       return state;
   }
 };
-function WinXP() {
+const WinXP: React.FC = () => {
   const [state, dispatch] = useReducer(reducer, initState);
   const ref = useRef(null);
   const mouse = useMouse(ref);
+  
+  const getFocusedAppId = (): number => {
+    if (state.focusing !== FOCUSING.WINDOW) return -1;
+    const focusedApp = [...state.apps]
+      .sort((a: any, b: any) => b.zIndex - a.zIndex)
+      .find((app: any) => !app.minimized);
+    return focusedApp ? focusedApp.id : -1;
+  };
+  
   const focusedAppId = getFocusedAppId();
-  const onFocusApp = useCallback(id => {
+  const onFocusApp: AppCallback = useCallback((id: any) => {
     dispatch({ type: FOCUS_APP, payload: id });
   }, []);
-  const onMaximizeWindow = useCallback(
-    id => {
+  const onMaximizeWindow: AppCallback = useCallback(
+    (id: any) => {
       if (focusedAppId === id) {
         dispatch({ type: TOGGLE_MAXIMIZE_APP, payload: id });
       }
     },
     [focusedAppId],
   );
-  const onMinimizeWindow = useCallback(
-    id => {
+  const onMinimizeWindow: AppCallback = useCallback(
+    (id: any) => {
       if (focusedAppId === id) {
         dispatch({ type: MINIMIZE_APP, payload: id });
       }
     },
     [focusedAppId],
   );
-  const onCloseApp = useCallback(
-    id => {
+  const onCloseApp: AppCallback = useCallback(
+    (id: any) => {
       if (focusedAppId === id) {
         dispatch({ type: DEL_APP, payload: id });
       }
     },
     [focusedAppId],
   );
-  function onMouseDownFooterApp(id) {
+  const onMouseDownFooterApp: AppCallback = (id: any) => {
     if (focusedAppId === id) {
       dispatch({ type: MINIMIZE_APP, payload: id });
     } else {
       dispatch({ type: FOCUS_APP, payload: id });
     }
-  }
-  function onMouseDownIcon(id) {
+  };
+  const onMouseDownIcon: IconCallback = (id: any) => {
     dispatch({ type: FOCUS_ICON, payload: id });
-  }
-  function onDoubleClickIcon(component) {
+  };
+  const onDoubleClickIcon: ComponentCallback = (component: any) => {
     const appSetting = Object.values(appSettings).find(
-      setting => setting.component === component,
+      (setting: any) => setting.component === component,
     );
-    dispatch({ type: ADD_APP, payload: appSetting });
-  }
-  function getFocusedAppId() {
-    if (state.focusing !== FOCUSING.WINDOW) return -1;
-    const focusedApp = [...state.apps]
-      .sort((a, b) => b.zIndex - a.zIndex)
-      .find(app => !app.minimized);
-    return focusedApp ? focusedApp.id : -1;
-  }
-  function onMouseDownFooter() {
+    if (appSetting) {
+      dispatch({ type: ADD_APP, payload: appSetting });
+    }
+  };
+
+  const onMouseDownFooter = () => {
     dispatch({ type: FOCUS_DESKTOP });
-  }
-  function onClickMenuItem(o) {
+  };
+  const onClickMenuItem: MenuItemCallback = (o: string) => {
     if (o === 'Internet')
       dispatch({ type: ADD_APP, payload: appSettings['Internet Explorer'] });
     else if (o === 'Minesweeper')

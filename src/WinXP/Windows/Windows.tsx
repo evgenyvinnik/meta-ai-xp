@@ -68,7 +68,7 @@ function Windows({
   onMinimize,
   onMaximize,
   focusedAppId,
-}) {
+}: WindowsProps) {
   return (
     <div style={{ position: 'relative', zIndex: 0 }}>
       {apps.map(app => (

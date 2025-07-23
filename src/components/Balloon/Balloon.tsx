@@ -3,7 +3,12 @@ import styled, { keyframes } from 'styled-components';
 
 import risk from 'assets/windowsIcons/229(16x16).png';
 
-function Balloon({ startAfter = 3000, duration = 15000 }) {
+interface BalloonProps {
+  startAfter?: number;
+  duration?: number;
+}
+
+function Balloon({ startAfter = 3000, duration = 15000 }: BalloonProps) {
   const [show, setShow] = useState(true);
   const [start, setStart] = useState(false);
   useEffect(() => {
