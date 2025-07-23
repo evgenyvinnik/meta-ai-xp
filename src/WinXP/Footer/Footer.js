@@ -37,7 +37,7 @@ function Footer({
   const [menuOn, setMenuOn] = useState(false);
   const menu = useRef(null);
   function toggleMenu() {
-    setMenuOn(on => !on);
+    setMenuOn(!menuOn);
   }
   function _onMouseDown(e) {
     if (e.target.closest('.footer__window')) return;
@@ -54,15 +54,6 @@ function Footer({
     }, 1000);
     return () => clearInterval(timer);
   }, [time]);
-  useEffect(() => {
-    const target = menu.current;
-    if (!target) return;
-    function onMouseDown(e) {
-      if (!target.contains(e.target) && menuOn) setMenuOn(false);
-    }
-    window.addEventListener('mousedown', onMouseDown);
-    return () => window.removeEventListener('mousedown', onMouseDown);
-  }, [menuOn]);
 
   return (
     <Container onMouseDown={_onMouseDown}>
