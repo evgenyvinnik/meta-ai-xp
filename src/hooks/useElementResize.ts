@@ -1,6 +1,45 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, RefObject } from 'react';
 
-function useElementResize(ref, options) {
+interface Offset {
+  x: number;
+  y: number;
+}
+
+interface Size {
+  width: number;
+  height: number;
+}
+
+interface Boundary {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+interface UseElementResizeOptions {
+  defaultOffset: Offset;
+  defaultSize: Size;
+  boundary: Boundary;
+  resizable?: boolean;
+  resizeThreshold?: number;
+  constraintSize?: number;
+  dragRef?: RefObject<HTMLElement>;
+}
+
+interface UseElementResizeReturn {
+  offset: Offset;
+  size: Size;
+}
+
+function useElementResize(
+  ref: RefObject<HTMLElement>,
+  options: UseElementResizeOptions
+): UseElementResizeReturn {
   const {
     defaultOffset,
     defaultSize,

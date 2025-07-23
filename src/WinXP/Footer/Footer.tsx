@@ -8,6 +8,31 @@ import sound from 'assets/windowsIcons/690(16x16).png';
 import usb from 'assets/windowsIcons/394(16x16).png';
 import risk from 'assets/windowsIcons/229(16x16).png';
 
+interface App {
+  id: string;
+  header: {
+    icon: string;
+    title: string;
+    noFooterWindow?: boolean;
+  };
+}
+
+interface FooterProps {
+  onMouseDownApp: (id: string) => void;
+  apps: App[];
+  focusedAppId: string;
+  onMouseDown: () => void;
+  onClickMenuItem: (name: string) => void;
+}
+
+interface FooterWindowProps {
+  id: string;
+  icon: string;
+  title: string;
+  onMouseDown: (id: string) => void;
+  isFocus: boolean;
+}
+
 const getTime = () => {
   const date = new Date();
   let hour = date.getHours();
@@ -32,18 +57,18 @@ function Footer({
   focusedAppId,
   onMouseDown,
   onClickMenuItem,
-}) {
+}: FooterProps) {
   const [time, setTime] = useState(getTime);
   const [menuOn, setMenuOn] = useState(false);
   const menu = useRef(null);
   function toggleMenu() {
     setMenuOn(!menuOn);
   }
-  function _onMouseDown(e) {
+  function _onMouseDown(e: React.MouseEvent) {
     if (e.target.closest('.footer__window')) return;
     onMouseDown();
   }
-  function _onClickMenuItem(name) {
+  function _onClickMenuItem(name: string) {
     onClickMenuItem(name);
     setMenuOn(false);
   }
@@ -95,7 +120,7 @@ function Footer({
   );
 }
 
-function FooterWindow({ id, icon, title, onMouseDown, isFocus }) {
+function FooterWindow({ id, icon, title, onMouseDown, isFocus }: FooterWindowProps) {
   function _onMouseDown() {
     onMouseDown(id);
   }

@@ -5,6 +5,62 @@ import styled from 'styled-components';
 import useElementResize from '../../hooks/useElementResize';
 import HeaderButtons from './HeaderButtons';
 
+interface AppData {
+  id: string;
+  component: React.ComponentType<any>;
+  header: {
+    icon: string;
+    title: string;
+    noFooterWindow?: boolean;
+  };
+  minimized: boolean;
+  maximized: boolean;
+  zIndex: number;
+  defaultSize: {
+    width: number;
+    height: number;
+  };
+  defaultOffset: {
+    x: number;
+    y: number;
+  };
+  resizable?: boolean;
+  injectProps?: any;
+}
+
+interface WindowsProps {
+  apps: AppData[];
+  onMouseDown: (id: string) => void;
+  onClose: (id: string) => void;
+  onMinimize: (id: string) => void;
+  onMaximize: (id: string) => void;
+  focusedAppId: string;
+}
+
+interface WindowProps {
+  injectProps?: any;
+  id: string;
+  onMouseDown: (id: string) => void;
+  onClose: (id: string) => void;
+  onMinimize: (id: string) => void;
+  onMaximize: (id: string) => void;
+  component: React.ComponentType<any>;
+  header: {
+    icon: string;
+    title: string;
+  };
+  defaultSize: {
+    width: number;
+    height: number;
+  };
+  defaultOffset: {
+    x: number;
+    y: number;
+  };
+  resizable?: boolean;
+  maximized: boolean;
+}
+
 function Windows({
   apps,
   onMouseDown,
