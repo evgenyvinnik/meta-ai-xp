@@ -1,7 +1,13 @@
 import React from 'react';
 
-function DashedBox({ mouse, startPos }) {
+interface DashedBoxProps {
+  mouse: { docX: number; docY: number };
+  startPos: { x: number; y: number } | null;
+}
+
+const DashedBox: React.FC<DashedBoxProps> = ({ mouse, startPos }) => {
   function getRect() {
+    if (!startPos) return { x: 0, y: 0, w: 0, h: 0 };
     return {
       x: Math.min(startPos.x, mouse.docX),
       y: Math.min(startPos.y, mouse.docY),
@@ -24,6 +30,6 @@ function DashedBox({ mouse, startPos }) {
     );
   }
   return null;
-}
+};
 
 export default DashedBox;

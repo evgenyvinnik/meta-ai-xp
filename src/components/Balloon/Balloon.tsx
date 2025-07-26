@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 
-import risk from 'assets/windowsIcons/229(16x16).png';
+import risk from '../../assets/windowsIcons/229(16x16).png';
 
 interface BalloonProps {
   startAfter?: number;
   duration?: number;
 }
 
-function Balloon({ startAfter = 3000, duration = 15000 }: BalloonProps) {
+const Balloon: React.FC<BalloonProps> = ({
+  startAfter = 3000,
+  duration = 15000,
+}) => {
   const [show, setShow] = useState(true);
   const [start, setStart] = useState(false);
   useEffect(() => {
@@ -45,7 +48,7 @@ function Balloon({ startAfter = 3000, duration = 15000 }: BalloonProps) {
       </Div>
     )
   );
-}
+};
 const fadein = keyframes`
   0% { 
     display: block;
@@ -70,7 +73,11 @@ const fadeout = keyframes`
     opacity: 0;
   }
 `;
-const Div = styled.div`
+interface StyledDivProps {
+  show: boolean;
+}
+
+const Div = styled.div<StyledDivProps>`
   position: absolute;
   display: block;
   opacity: 0;
