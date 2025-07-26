@@ -4,21 +4,33 @@ import styled from 'styled-components';
 import find from './find.svg';
 import smile from './smile.svg';
 
-function Search({ className, goMain, onSearch, query }) {
+interface SearchProps {
+  className?: string;
+  goMain: () => void;
+  onSearch: (query: string) => void;
+  query: string;
+}
+
+const Search: React.FC<SearchProps> = ({
+  className,
+  goMain,
+  onSearch,
+  query,
+}) => {
   const [value, setValue] = useState(query);
   const [tag, setTag] = useState('All');
-  function onChange(e) {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-  }
-  function onClick() {
+  };
+  const onClick = () => {
     onSearch(value);
-  }
-  function onKeyDown(e) {
+  };
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') return;
     onSearch(value);
-  }
-  function renderTags() {
-    return 'All,Maps,Images,News,Videos,More'.split(',').map(tagName => (
+  };
+  const renderTags = () =>
+    'All,Maps,Images,News,Videos,More'.split(',').map((tagName) => (
       <div
         onClick={() => setTag(tagName)}
         className={`tag ${tagName === tag ? 'active' : ''}`}
@@ -27,7 +39,6 @@ function Search({ className, goMain, onSearch, query }) {
         {tagName}
       </div>
     ));
-  }
   return (
     <div className={className}>
       <section className="top-bars">
@@ -102,7 +113,7 @@ function Search({ className, goMain, onSearch, query }) {
       </footer>
     </div>
   );
-}
+};
 
 export default styled(Search)`
   height: 100%;
