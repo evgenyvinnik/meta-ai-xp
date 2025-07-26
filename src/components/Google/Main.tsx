@@ -2,18 +2,23 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import smile from './smile.svg';
 
-function Main({ onSearch, className }) {
+interface MainProps {
+  onSearch: (query: string) => void;
+  className?: string;
+}
+
+const Main: React.FC<MainProps> = ({ onSearch, className }) => {
   const [value, setValue] = useState('');
-  function onChange(e) {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
-  }
-  function onClick() {
+  };
+  const onClick = () => {
     onSearch(value);
-  }
-  function onKeyDown(e) {
+  };
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key !== 'Enter') return;
     onSearch(value);
-  }
+  };
   return (
     <div className={className}>
       <header>
@@ -71,7 +76,7 @@ function Main({ onSearch, className }) {
       </footer>
     </div>
   );
-}
+};
 
 export default styled(Main)`
   height: 100%;
