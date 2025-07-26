@@ -55,7 +55,6 @@ export const Game = [
     text: 'Exit',
   },
 ];
-
 const Help = [
   {
     type: 'item',

@@ -6,5 +6,5 @@ import './assets/clear.css';
 import './assets/font.css';
 import App from './App';
 
-const root = createRoot(document.getElementById('root'));
+const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(<App />);

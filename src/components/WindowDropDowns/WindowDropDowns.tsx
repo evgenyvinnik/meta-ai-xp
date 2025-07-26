@@ -2,23 +2,30 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import WindowDropDown from './WindowDropDown';
 
+export interface WindowDropDownsProps {
+  items: Record<string, any[]>;
+  onClickItem: (name: string) => void;
+  className?: string;
+  height?: number;
+}
+
 export function WindowDropDowns({
   items,
   onClickItem,
   className,
   height = 20,
-}) {
-  const dropDown = useRef(null);
+}: WindowDropDownsProps) {
+  const dropDown = useRef<HTMLDivElement>(null);
   const [openOption, setOpenOption] = useState('');
-  function hoverOption(option) {
+  function hoverOption(option: string) {
     if (openOption) setOpenOption(option);
   }
-  function _onClickItem(name) {
+  function _onClickItem(name: string) {
     setOpenOption('');
     onClickItem(name);
   }
-  function onMouseUp(e) {
-    if (!dropDown.current.contains(e.target)) setOpenOption('');
+  function onMouseUp(e: MouseEvent) {
+    if (dropDown.current && !dropDown.current.contains(e.target as Node)) setOpenOption('');
   }
   useEffect(() => {
     window.addEventListener('mouseup', onMouseUp);

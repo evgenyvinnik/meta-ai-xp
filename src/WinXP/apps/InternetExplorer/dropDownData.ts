@@ -112,7 +112,6 @@ export const File = [
     text: 'Close',
   },
 ];
-
 const Edit = [
   {
     type: 'item',

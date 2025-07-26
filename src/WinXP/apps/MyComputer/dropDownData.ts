@@ -86,7 +86,6 @@ const Edit = [
     text: 'Invert Selection',
   },
 ];
-
 const View = [
   {
     type: 'menu',
